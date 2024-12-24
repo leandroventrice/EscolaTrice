@@ -1,0 +1,45 @@
+create database Escolatrice;
+
+use EscolaTrice;
+
+create table professores (
+	professor_id int AUTO_INCREMENT primary key,
+    nome varchar(255) not null,
+    email varchar(255) unique not null,
+    idioma varchar(50) not null,
+    telefone varchar(20)
+	);
+create table idioma (
+	idioma_id int auto_increment primary key,
+    idioma varchar(255) not null,
+    periodo varchar(50) not null,
+    duracao int not null,
+    preco decimal (10,2) not null
+	);
+create table alunos (
+	aluno_id int auto_increment primary key,
+    nome varchar(255) not null,
+    email varchar(255) unique not null,
+    data_nascimento date not null,
+    telefone varchar(20),
+    professor_id int,
+    foreign key (professor_id) references professores(professor_id)
+    );
+create table matriculas (
+	matricula_id int auto_increment primary key,
+    aluno_id int not null,
+    idioma_id int not null,
+    data_matricula date not null,
+    status varchar(50) default 'ativo',
+    foreign key (aluno_id) references alunos(aluno_id),
+    foreign key (idioma_id) references idioma(idioma_id)
+    );
+create table aulas (
+	aula_id int auto_increment primary key,
+    idioma_id int not null,
+    professor_id int not null,
+    data_aula datetime not null,
+    duracao int not null,
+    foreign key (idioma_id) references idioma(idioma_id),
+    foreign key (professor_id) references professores(professor_id)
+    );
